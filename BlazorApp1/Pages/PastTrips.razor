@@ -1,0 +1,85 @@
+﻿@page "/PastTrips"
+@using BlazorApp1.Data
+@inject Detailes DetailesService
+
+<NavLink class="nav-link" href="AddNewTrip"> 
+    <span class="oi oi_plus" aria-hidden="true" Add New Trip</span>
+</NavLink>
+
+<h3>Past Trips</h3>
+
+@if(trips is null)
+{
+    <p><em>Loading</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Trip Name
+                </th>
+                <th>
+                    Start Date
+                </th>
+                <th>
+                    End Date
+                </th>
+                <th>
+                    Country
+                </th>
+                <th>
+                    City
+                </th>
+                <th>
+                    Edit
+                </th>
+                <th>
+                    Delete
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var trp in trips)
+            {
+                <tr>
+                    <td>
+                        @trp Name
+                    </td>
+                    <td>
+                        @trp Start Date
+                    </td>
+                    <td>
+                        @trp End Date
+                    </td>
+                    <td>
+                        @trp COuntry
+                    </td>
+                    <td>
+                        @trp City
+                    </td>
+                    <td>
+                        <a class="nav-link btn btn-primary" href="EditTrip/@trp.TripName">
+                            <span class="oi oi-pencil" aria-hidden="true">Edit</span>
+                        </a>
+                    </td>
+                    <td>
+                        <a class="nav-link btn btn-danger" href="DeleteTrip/@trp.TripName">
+                            <span class="oi oi-trash" aria-hidden="true">Delete</span>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    List<Trip> trips;
+
+    protected override async Task OnInitializedAsync()
+    {
+        trips = await DetailesService.GetAllTrips();
+    }
+}

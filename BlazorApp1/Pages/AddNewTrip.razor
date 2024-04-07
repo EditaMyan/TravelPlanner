@@ -1,0 +1,58 @@
+﻿@page "/AddNewTrip"
+@using BlazorApp1.Data
+@inject Detailes DetailesService
+@inject NavigationManager NavigationManager
+
+<h3>Add New Trip</h3>
+<hr />
+
+<form>
+    <div class="row">
+        <div class="col_md-5">
+            <div class="for-group">
+                <label for="TripName" class="control-lable" Trip>Trip Name</label>
+                <input form="TripName" class="form-control" @bind="@trp.TripName"/>
+            </div>
+            <div class="for-group">
+                <label for="StartDate" class="control-lable" Trip>Start Date</label>
+                <input form="StartDate" class="form-control" @bind="@trp.StartDate" />
+            </div>
+            <div class="for-group">
+                <label for="End Date" class="control-lable" Trip>End Date</label>
+                <input form="EndDate" class="form-control" @bind="@trp.EndDate" />
+            </div>
+            <div class="for-group">
+                <label for="Country" class="control-lable" Trip>Country</label>
+                <input form="Country" class="form-control" @bind="@trp.Country" />
+            </div>
+            <div class="for-group">
+                <label for="City" class="control-lable" Trip>City</label>
+                <input form="City" class="form-control" @bind="@trp.City" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <input type="button" class="btn btn-primry" @onclick="@AddNewTripDetails" value="Save Trip"/>
+                <input type="button" class="btn btn-primry" @onclick="@Cancel" value="Cancel" />
+            </div>
+        </div>
+    </div>
+</form>
+
+@code {
+    Trip trp = new Trip();
+
+
+    protected async void AddNewTripDetails()
+    {
+        await DetailesService.AddNewTrip(trp);
+        NavigationManager.NavigateTo("/ PastTrips");
+    }
+    void Cancel()
+    {
+        NavigationManager.NavigateTo("/ PastTrips");
+    }
+
+}
